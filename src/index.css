@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Karla", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-glow: var(--glow);
+}
+
+:root {
+  --background: oklch(0.895 0.004 95);
+  --foreground: oklch(0.28 0.008 80);
+  --card: oklch(0.925 0.004 95);
+  --card-foreground: oklch(0.25 0.008 80);
+  --primary: oklch(0.48 0.085 52);
+  --primary-foreground: oklch(0.98 0.002 95);
+  --muted: oklch(0.85 0.005 92);
+  --muted-foreground: oklch(0.45 0.01 75);
+  --accent: oklch(0.86 0.012 85);
+  --accent-foreground: oklch(0.25 0.008 80);
+  --border: oklch(0.82 0.006 88);
+  --glow: oklch(0.8 0.04 65 / 0.18);
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility font-sans {
+  font-family: var(--font-sans);
+}
+
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility grain {
+  position: relative;
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.28;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}
+
+@keyframes shelve-in {
+  0% {
+    opacity: 0;
+    transform: translateX(110px) translateZ(80px) rotateY(-34deg) rotateZ(6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateZ(0) rotateY(var(--ry, 0deg)) rotateZ(var(--lean, 0deg));
+  }
+}
+
+@utility animate-shelve-in {
+  animation: shelve-in 1100ms cubic-bezier(0.22, 1, 0.32, 1) both;
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2%, -2%) scale(1.03);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-drift {
+  animation: drift 24s ease-in-out infinite alternate;
+}
