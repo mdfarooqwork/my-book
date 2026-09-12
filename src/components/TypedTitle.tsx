@@ -24,13 +24,13 @@ export const TypedTitle: React.FC = () => {
     <h1
       id="library-title"
       aria-label={FULL}
-      className="font-display italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-foreground select-none"
+      className="font-display italic text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-light tracking-tight text-foreground select-none leading-[1.1]"
     >
       <span aria-hidden="true">
         {displayed}
         <span
-          className={`inline-block w-[2px] h-[0.85em] align-baseline ml-1.5 bg-primary transition-opacity duration-300 ${
-            isDone ? "animate-pulse opacity-70" : "opacity-100"
+          className={`inline-block w-[1.5px] h-[0.75em] align-baseline ml-1 bg-primary/70 transition-opacity duration-300 ${
+            isDone ? "animate-pulse opacity-60" : "opacity-100"
           }`}
         />
       </span>

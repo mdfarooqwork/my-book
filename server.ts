@@ -4,8 +4,7 @@ import { fileURLToPath } from "url";
 import { GoogleGenAI, Type } from "@google/genai";
 import { books } from "./src/data/books";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const currentDir = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 async function startServer() {
   const app = express();
@@ -51,8 +50,36 @@ async function startServer() {
         ? customBooks
         : books;
 
+      // Pre-filter candidate books if catalogue is large (> 60 books) for swift LLM evaluation
+      let candidateBooks = bookList;
+      if (bookList.length > 60) {
+        const qLower = cleanQuery.toLowerCase();
+        const tokens = qLower.split(/\s+/).filter((t: string) => t.length > 1);
+        const preScored = bookList.map((b) => {
+          const title = (b.title || "").toLowerCase();
+          const author = (b.author || "").toLowerCase();
+          const genres = (b.genres || []).join(" ").toLowerCase();
+          const blurb = (b.blurb || "").toLowerCase();
+          let s = 0;
+          if (title.includes(qLower)) s += 15;
+          if (author.includes(qLower)) s += 10;
+          if (genres.includes(qLower)) s += 8;
+          if (blurb.includes(qLower)) s += 5;
+          for (const tok of tokens) {
+            if (title.includes(tok)) s += 4;
+            if (author.includes(tok)) s += 3;
+            if (genres.includes(tok)) s += 3;
+            if (blurb.includes(tok)) s += 2;
+          }
+          return { book: b, s };
+        });
+        preScored.sort((a, b) => b.s - a.s);
+        const positiveMatches = preScored.filter((x) => x.s > 0).map((x) => x.book);
+        candidateBooks = positiveMatches.length >= 8 ? positiveMatches.slice(0, 50) : bookList.slice(0, 50);
+      }
+
       // Build catalogue string: id :: title :: author :: year :: genres :: blurb (160 chars)
-      const catalogueLines = bookList.map((b) => {
+      const catalogueLines = candidateBooks.map((b) => {
         const blurb = (b.blurb || "").slice(0, 160).replace(/\n/g, " ");
         const genres = (b.genres || []).join(", ");
         return `${b.id} :: ${b.title} :: ${b.author} :: ${b.year || ""} :: ${genres} :: ${blurb}`;

@@ -210,29 +210,37 @@ export const BookDetail: React.FC<BookDetailProps> = ({
         }`}
       >
         <div className="bg-card/90 backdrop-blur-md border border-border/80 rounded-2xl p-6 md:p-8 shadow-2xl text-card-foreground">
-          {/* Top Bar: Recommender or Finished Date & Close button */}
+          {/* Top Bar: Book Number, Level, Finished Date & Close button */}
           <div className="flex items-center justify-between pb-4 border-b border-border/60">
-            <div className="flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono tracking-wider uppercase text-muted-foreground">
+              {book.bookNumber && (
+                <span className="px-2 py-0.5 rounded bg-primary/10 text-primary font-bold">
+                  #{book.bookNumber}
+                </span>
+              )}
+              {book.level && (
+                <span className="px-2 py-0.5 rounded bg-muted text-foreground border border-border/60">
+                  {book.level}
+                </span>
+              )}
               {book.recommender ? (
                 <span className="flex items-center gap-1 text-primary">
                   <User className="w-3.5 h-3.5" />
                   <span>Recommended by {book.recommender}</span>
                 </span>
-              ) : book.finished ? (
+              ) : book.finished && !book.level ? (
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Finished {book.finished}</span>
                 </span>
-              ) : (
-                <span>On the Shelf</span>
-              )}
+              ) : null}
             </div>
 
             <button
               type="button"
               id="close-book-detail-button"
               onClick={handleRetract}
-              className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer ml-auto"
               aria-label="Close detail view"
             >
               <X className="w-5 h-5" />

@@ -1,6 +1,6 @@
 {
   "name": "Virtual Library",
-  "description": "An ethereal personal bookshelf featuring 3D books with authentic spine and cover styling, natural-language library search, book recommendations, and rich front-cover pull-outs.",
+  "description": "An ethereal personal bookshelf featuring 3D books with authentic spine and cover styling, dynamic genre filtering, natural search, and rich front-cover pull-outs.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

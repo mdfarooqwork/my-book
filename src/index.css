@@ -20,18 +20,18 @@
 }
 
 :root {
-  --background: oklch(0.895 0.004 95);
-  --foreground: oklch(0.28 0.008 80);
-  --card: oklch(0.925 0.004 95);
-  --card-foreground: oklch(0.25 0.008 80);
-  --primary: oklch(0.48 0.085 52);
-  --primary-foreground: oklch(0.98 0.002 95);
-  --muted: oklch(0.85 0.005 92);
-  --muted-foreground: oklch(0.45 0.01 75);
-  --accent: oklch(0.86 0.012 85);
-  --accent-foreground: oklch(0.25 0.008 80);
-  --border: oklch(0.82 0.006 88);
-  --glow: oklch(0.8 0.04 65 / 0.18);
+  --background: oklch(0.975 0.012 85);
+  --foreground: oklch(0.22 0.01 60);
+  --card: oklch(0.988 0.007 85);
+  --card-foreground: oklch(0.22 0.01 60);
+  --primary: oklch(0.48 0.075 65);
+  --primary-foreground: oklch(0.985 0.005 85);
+  --muted: oklch(0.938 0.008 85);
+  --muted-foreground: oklch(0.50 0.018 75);
+  --accent: oklch(0.945 0.012 85);
+  --accent-foreground: oklch(0.22 0.01 60);
+  --border: oklch(0.885 0.012 85);
+  --glow: oklch(0.6 0.04 65 / 0.12);
 }
 
 @utility font-display {
@@ -64,9 +64,9 @@
     height: 100vh;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.28;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay;
+    opacity: 0.14;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
   }
 }
 

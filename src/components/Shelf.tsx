@@ -35,17 +35,21 @@ export const Shelf: React.FC<ShelfProps> = ({
 
   // Total raw width of all books in one copy
   const singleCopyWidth = books.reduce((acc, b) => acc + b.width + 2, 0);
-  const isLoopable = singleCopyWidth > 2600;
+  const isLoopable = books.length <= 40 && singleCopyWidth > 2600;
   const copiesCount = isLoopable ? 3 : 1;
 
   // Compute curved perspective for visible spines via direct CSS custom property
   const updatePerspective = useCallback(() => {
     if (!railRef.current) return;
     const vpCenter = window.innerWidth / 2;
+    const vpLeft = -80;
+    const vpRight = window.innerWidth + 80;
     const buttons = railRef.current.querySelectorAll<HTMLButtonElement>("button[data-spine-btn]");
 
     buttons.forEach((btn) => {
       const rect = btn.getBoundingClientRect();
+      // Skip calculating off-screen books for 60fps performance
+      if (rect.right < vpLeft || rect.left > vpRight) return;
       const spineCenter = rect.left + rect.width / 2;
       const t = (spineCenter - vpCenter) / (window.innerWidth / 2);
       const absT = Math.min(1, Math.abs(t));
